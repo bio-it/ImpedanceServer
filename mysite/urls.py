@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from collector import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^collector/', views.collector),
@@ -25,4 +27,4 @@ urlpatterns = [
     url(r'^test', views.test),
     url(r'^graph/', views.graph),
     url(r'^$', views.main),
-]
+] + static(settings.STATIC_URL, document_ROOT=settings.STATIC_URL)
