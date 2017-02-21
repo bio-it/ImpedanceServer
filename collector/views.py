@@ -19,9 +19,6 @@ import random
 import matplotlib
 import matplotlib.pyplot as plt
 
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from matplotlib.figure import Figure
-from matplotlib.dates import DateFormatter
 
 # This web server only manages the device's status, data.
 # Not handle the device's state, only bypass the commands.
@@ -326,7 +323,7 @@ def command(request):
 				channels_value = [x+1 for x in channels_value]
 
 				result["dataCounter"].append(data.dataCounter)
-				result["timeRange"].append(str(data.startTime) + "-" + str(data.targetTime))
+				result["timeRange"].append(str(data.startTime) + "~<br>" + str(data.targetTime))
 				result["period"].append(data.period)
 				result["freqs"].append(data.freqs)
 				result["channels"].append(str(channels_value)) # for viewer
@@ -337,22 +334,6 @@ def command(request):
 
 	else:
 		return HttpResponse('{"result":false}')
-
-def test(request):
-	time = DwfMeasureData.objects.filter(dataCounter=1).values_list('time', flat=True)
-	Z = DwfMeasureData.objects.filter(dataCounter=1).values_list('Z', flat=True)
-	R = DwfMeasureData.objects.filter(dataCounter=1).values_list('R', flat=True)
-	C = DwfMeasureData.objects.filter(dataCounter=1).values_list('C', flat=True)
-
-	fig = plt.figure(figsize=(9.5, 6), facecolor='w', edgecolor='k')
-	ax = fig.add_subplot(1, 1, 1)
-	ax.plot(time, R)
-	canvas = FigureCanvas(fig)
-	response = HttpResponse(content_type='image/png')
-	canvas.print_png(response)
-
-	return response
-	# return render(request, 'test.html', {'testData':chart})
 
 def graph(request):
 	dataCounter = request.GET.get('dataCounter', '')
@@ -368,9 +349,9 @@ def graph(request):
 		series = []
 		series_options_terms = {}
 
-		# TODO change the date time format for X-axis
-		# TODO2 testing for ethernet is disable.
 		dateTime = DwfMeasureData.objects.filter(dataCounter=dataCounter, channel=channels[0], freq=freqs[0]).values("time")
+		# print dateTime.get()
+		# dateTime.update("")
 
 		for channel in channels:
 			queryData = DwfMeasureData.objects.filter(dataCounter=dataCounter, channel=channel, freq__in=freqs)
@@ -411,6 +392,9 @@ def graph(request):
 
 		return render(request, 'graph.html', {'graphData':chart})	
 	return HttpResponse('')
+
+def error(request):
+	return render(request, 'error.html')
 
 def main(request):
 	return render(request, 'index.html')

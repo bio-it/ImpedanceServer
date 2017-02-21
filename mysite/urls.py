@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^state/', views.state),
     url(r'^init/', views.init),
     url(r'^command/', views.command),
-    url(r'^test', views.test),
     url(r'^graph/', views.graph),
     url(r'^$', views.main),
+    url(r'error/', views.error),
 ] + static(settings.STATIC_URL, document_ROOT=settings.STATIC_URL)
