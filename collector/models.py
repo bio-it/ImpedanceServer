@@ -21,3 +21,4 @@ class DwfMeasureData(models.Model):
 	freq = models.IntegerField(null=False, default=0)
 	channel = models.IntegerField(null=False, default='')
 	time = models.DateTimeField(blank=True, null=True)
+	timeMin = models.IntegerField(null=False, default=0)

@@ -86,13 +86,14 @@ def collector(request):
 		elif menu == 'scope':
 			dataCounter = jsonData['dataCounter']
 			time = jsonData['time']
+			timeMin = jsonData['timeMin']
 			Z = jsonData['Z']
 			R = jsonData['R']
 			C = jsonData['C']
 			freq = jsonData['freq']
 			channel = jsonData['channel']
 			for idx in range(len(channel)):
-				dbData = DwfMeasureData(dataCounter=dataCounter, time=time, 
+				dbData = DwfMeasureData(dataCounter=dataCounter, time=time, timeMin=timeMin,
 					Z=Z[idx], R=R[idx], C=C[idx], freq=freq[idx], channel=channel[idx])
 				dbData.save()
 
@@ -359,7 +360,7 @@ def graph(request):
 			series_options_term = "channel%d_%s" %(channel+1, dataSelection)
 			series.append({"options" :{
 							"source" : queryData},
-							"terms" : [{"channel%d_time" % (channel+1) : "time"}, 
+							"terms" : [{"channel%d_time" % (channel+1) : "timeMin"}, 
 										series_term]})
 
 			series_options_terms["channel%d_time" % (channel+1)] = [series_options_term] 
@@ -375,20 +376,10 @@ def graph(request):
                'text': 'Impedence Data'},
            		'xAxis': {
 	                'title': {
-                   		'text': 'time'}},
+                   		'text': 'time(min)'}},
                 'yAxis': {
 	                'title': {
                    		'text': 'Impedence'}}})
-
-		# 
-
-
-		"""
-		chart_options=
-			{"title" : {
-				"text":'test title'},
-				}
-		"""
 
 		return render(request, 'graph.html', {'graphData':chart})	
 	return HttpResponse('')

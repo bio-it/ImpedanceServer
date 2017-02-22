@@ -22,7 +22,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript">
-	var predefinedFreqs = ["2000", "4000", "8000", "10000", "20000"];
+	var predefinedFreqs = ["4000", "8000", "16000", "32000"];
 	var initCheck = true;
 	var commandOperating = false;
 	var stateChangeCheck = false;
@@ -375,7 +375,7 @@
 			$('#filterChannel' + i + "_checker").attr("class", "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-disabled is-upgraded");
 		}
 
-		for(var i=1; i<=5; i++){
+		for(var i=1; i<=predefinedFreqs.length; i++){
 			$('#filterFreq' + i).prop("checked", false);
 			$('#filterFreq' + i).prop("value", 0);
 			$('#filterFreq' + i).prop("disabled", true);
@@ -453,7 +453,7 @@
 			}
 		}
 
-		for(var i=1; i<=5; ++i){
+		for(var i=1; i<=predefinedFreqs.length; ++i){
 			var checked = $('#filterFreq' + i).is(':checked');
 			if(checked){
 				freqs += predefinedFreqs[i-1] + ",";
@@ -500,7 +500,9 @@
 				var state = result.state;
 
 
-				for(var i=1; i<=6; i++){
+				for(var i=1; i<=4; i++){
+					$('#result_list_' + (i+1) + '_radio').val("0");
+					$('#result_list_1_radio_icon').attr("class", "demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded");
 					$('#result_list_' + i + '_icon').text("done");
 					$('#result_list_' + i + '_icon').attr("class", "material-icons  mdl-list__item-icon redled");
 				}
@@ -510,7 +512,7 @@
 					$('#result_list_1_icon').attr("class", "material-icons  mdl-list__item-icon blueled");
 				}
 
-				for(var i=0; i<6; ++i){
+				for(var i=0; i<4; ++i){
 					if(i < dataLen){
 						$('#result_list_' + (i+1)).attr("style", "visibility: ");
 						$('#result_list_' + (i+1) + '_separator').attr("style", "visibility: ");
@@ -527,8 +529,6 @@
 						$('#result_list_' + (i+1) + '_freqs').val("");
 						$('#result_list_' + (i+1) + '_channels').val("");
 					}
-
-					$('#result_list_' + (i+1) + '_radio').val("0");
 				}
 
 				$('#result_list_1_radio').val("1");
@@ -564,7 +564,7 @@
           			$('#setup').prop("disabled", true);
           			$('#period').prop("disabled", true);
           			$('#deadline').prop("disabled", true);
-          			for(var i=1; i<=5; i++){
+          			for(var i=1; i<=predefinedFreqs.length; i++){
           				$('#selectFreq' + i).prop("disabled", true);
           				$('#selectFreq' + i + "_checker").attr("class", "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-disabled is-upgraded");
           			}
@@ -584,7 +584,7 @@
 	          			$('#setup').prop("disabled", false);
 	          			$('#period').prop("disabled", false);
 	          			$('#deadline').prop("disabled", false);
-	          			for(var i=1; i<=5; i++){
+	          			for(var i=1; i<=predefinedFreqs.length; i++){
 	          				$('#selectFreq' + i).prop("disabled", false);
 	          				$('#selectFreq' + i + "_checker").attr("class", "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded");
 	          			}
@@ -613,7 +613,7 @@
 			var period = $('#period').val();
 			var deadline = $('#deadline').val();
 
-			for(var i=1; i<=5; ++i){
+			for(var i=1; i<=predefinedFreqs.length; ++i){
 				var checked = $('#selectFreq' + i).is(':checked');
 				if(checked){
 					frequencies += predefinedFreqs[i-1] + ",";
@@ -665,7 +665,7 @@
           			$('#period').prop("disabled", true);
           			$('#deadline').prop("disabled", true);
 
-          			for(var i=1; i<=5; ++i){
+          			for(var i=1; i<=predefinedFreqs.length; ++i){
 						$('#selectFreq' + i).prop("disabled", true);
 
 						var checked = $('#selectFreq' + i).is(':checked');
@@ -716,7 +716,7 @@
           		complete: function(){
           			commandOperating = false;
 
-          			for(var i=1; i<=5; ++i){
+          			for(var i=1; i<=predefinedFreqs.length; ++i){
 						$('#selectFreq' + i).prop("disabled", false);
 
 						var checked = $('#selectFreq' + i).is(':checked');
@@ -773,7 +773,7 @@
 						$('#deadline').prop("disabled", true);
 						$('#start').prop("disabled", true);
 
-						for(var i=1; i<=6; i++){
+						for(var i=1; i<=predefinedFreqs.length; i++){
 	          				$('#selectFreq' + i).prop("disabled", true);
 	          				var checked = $('#selectFreq' + i).is(':checked');
 
@@ -891,7 +891,7 @@
         		loadGraph();
 			});
 
-			if(i <= 5){
+			if(i <= predefinedFreqs.length){
 				$('#filterFreq' + i).click(function(){
 					loadGraph();
 				});				
@@ -938,11 +938,46 @@
   </div>
 </dialog>
 
+<style>
+	.h5_style {
+		font-family: "Roboto","Helvetica","Arial",sans-serif;
+    	margin: 24px 0 16px;
+    	font-weight: 500;
+    	font-size: 14px;
+	}
+
+	.h5_style_no_margin {
+		font-family: "Roboto","Helvetica","Arial",sans-serif;
+    	margin: 24px 0 16px;
+    	font-weight: 500;
+    	font-size: 14px;
+		-webkit-margin-after: 0.2em;
+	}
+
+	.mdl-list__item2 {
+		font-size:12px;
+		min-height:10px;
+		height:20px;
+	}
+
+	.list_item_no_padding {
+	  	padding-top: 5.5px;
+	  	padding-bottom: 5.5px;
+	  	min-height: 32px;
+	}
+
+	.list_item_no_padding2 {
+	  	padding-top: 0px;
+	  	padding-bottom: 2px;
+	  	min-height: 16px;
+	}
+</style>
+
 <!-- Simple header with scrollable tabs. -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-      <span class="mdl-layout-title">Impedance Analysis</span>
+      <span class="mdl-layout-title">IMPEDENCE ANALYSIS</span>
     </div>
     <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
       <a href="#scroll-tab-1" class="mdl-layout__tab is-active" id="tab_1">Setup/Control View</a>
@@ -951,56 +986,59 @@
   </header>
   <main class="mdl-layout__content">
     <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+
+      <div style="float: left; margin: 10px; margin-left:20px; border:2px solid #ebebeb; height:550px"></div>
+
       <div class="page-content" style="float: left; margin: 0px 5px 5px 10px;">
-      	<h5>&nbsp;&nbsp;Chip Setup</h5>
+      	<h5 class="h5_style">&nbsp;&nbsp;CHIP SETUP</h5>
       	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
 		  <thead>
 		    <tr>
-		      <th class="mdl-data-table__cell--non-numeric">Channel</th>
-		      <th>R</th>
-		      <th>C</th>
+		      <th class="mdl-data-table__cell--non-numeric" width="35px" style="padding-left: 24px;">ch</th>
+		      <th width="70px">R</th>
+		      <th width="70px">C</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		    <tr>
-		      <td class="mdl-data-table__cell--non-numeric">1:</td>
-		      <td id="R1"></td>
-		      <td id="C1"></td>
+		      <td class="mdl-data-table__cell--non-numeric">1</td>
+		      <td class="list_item_no_padding" id="R1"></td>
+		      <td class="list_item_no_padding" id="C1"></td>
 		    </tr>
 		    <tr>
-		      <td class="mdl-data-table__cell--non-numeric">2:</td>
-		      <td id="R2"></td>
-		      <td id="C2"></td>
+		      <td class="mdl-data-table__cell--non-numeric">2</td>
+		      <td class="list_item_no_padding" id="R2"></td>
+		      <td class="list_item_no_padding" id="C2"></td>
 		    </tr>
 		    <tr>
-		      <td class="mdl-data-table__cell--non-numeric">3:</td>
-		      <td id="R3"></td>
-		      <td id="C3"></td>
+		      <td class="mdl-data-table__cell--non-numeric">3</td>
+		      <td class="list_item_no_padding" id="R3"></td>
+		      <td class="list_item_no_padding" id="C3"></td>
 		    </tr>
 		    <tr>
-		      <td class="mdl-data-table__cell--non-numeric">4:</td>
-		      <td id="R4"></td>
-		      <td id="C4"></td>
+		      <td class="mdl-data-table__cell--non-numeric">4</td>
+		      <td class="list_item_no_padding" id="R4"></td>
+		      <td class="list_item_no_padding" id="C4"></td>
 		    </tr>
 		    <tr>
-		      <td class="mdl-data-table__cell--non-numeric">5:</td>
-		      <td id="R5"></td>
-		      <td id="C5"></td>
+		      <td class="mdl-data-table__cell--non-numeric">5</td>
+		      <td class="list_item_no_padding" id="R5"></td>
+		      <td class="list_item_no_padding" id="C5"></td>
 		    </tr>
 		    <tr>
-		      <td class="mdl-data-table__cell--non-numeric">6:</td>
-		      <td id="R6"></td>
-		      <td id="C6"></td>
+		      <td class="mdl-data-table__cell--non-numeric">6</td>
+		      <td class="list_item_no_padding" id="R6"></td>
+		      <td class="list_item_no_padding" id="C6"></td>
 		    </tr>
 		    <tr>
-		      <td class="mdl-data-table__cell--non-numeric">7:</td>
-		      <td id="R7"></td>
-		      <td id="C7"></td>
+		      <td class="mdl-data-table__cell--non-numeric">7</td>
+		      <td class="list_item_no_padding" id="R7"></td>
+		      <td class="list_item_no_padding" id="C7"></td>
 		    </tr>
 		    <tr>
-		      <td class="mdl-data-table__cell--non-numeric">8:</td>
-		      <td id="R8"></td>
-		      <td id="C8"></td>
+		      <td class="mdl-data-table__cell--non-numeric">8</td>
+		      <td class="list_item_no_padding" id="R8"></td>
+		      <td class="list_item_no_padding" id="C8"></td>
 		    </tr>
 		  </tbody>
 		</table>
@@ -1010,9 +1048,11 @@
 		</button>
       </div>
 
+      <div style="float: left; margin: 10px; margin-left:20px; border:2px solid #ebebeb; height:550px"></div>
+
 	  <style>
 	    .list-control-style {
-	    width: 250px;
+	    width: 170px;
 	  }
 
 	  .list-radio-style {
@@ -1024,12 +1064,12 @@
 	  </style>
 
       <div class="page-content" style="float: left; margin: 0px 5px 5px 10px;">
-			<h5 style="margin-left: 5px;">Parameter Setup</h5>
+			<h5 class="h5_style" style="margin-left: 5px;">PARAMETER SETUP</h5>
 			<ul class="list-control-style mdl-list">
-			  <li class="mdl-list__item">
+			  <li class="mdl-list__item list_item_no_padding">
 			    <span class="mdl-list__item-primary-content">
 			      <i id="valid1_icon" class="material-icons  mdl-list__item-icon">remove</i>
-			      Channel 1
+			      ch 1
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectChannel1" id="selectChannel1_checker">
@@ -1037,10 +1077,10 @@
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
+			  <li class="mdl-list__item list_item_no_padding">
 			    <span class="mdl-list__item-primary-content">
 			      <i id="valid2_icon" class="material-icons  mdl-list__item-icon">remove</i>
-			      Channel 2
+			      ch 2
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectChannel2" id="selectChannel2_checker">
@@ -1048,10 +1088,10 @@
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
+			  <li class="mdl-list__item list_item_no_padding">
 			    <span class="mdl-list__item-primary-content">
 			      <i id="valid3_icon" class="material-icons  mdl-list__item-icon">remove</i>
-			      Channel 3
+			      ch 3
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectChannel3" id="selectChannel3_checker">
@@ -1059,10 +1099,10 @@
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
+			  <li class="mdl-list__item list_item_no_padding">
 			    <span class="mdl-list__item-primary-content">
 			      <i id="valid4_icon" class="material-icons  mdl-list__item-icon">remove</i>
-			      Channel 4
+			      ch 4
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectChannel4" id="selectChannel4_checker">
@@ -1070,10 +1110,10 @@
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
+			  <li class="mdl-list__item list_item_no_padding">
 			    <span class="mdl-list__item-primary-content">
 			      <i id="valid5_icon" class="material-icons  mdl-list__item-icon">remove</i>
-			      Channel 5
+			      ch 5
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectChannel5" id="selectChannel5_checker">
@@ -1081,10 +1121,10 @@
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
+			  <li class="mdl-list__item list_item_no_padding">
 			    <span class="mdl-list__item-primary-content">
 			      <i id="valid6_icon" class="material-icons  mdl-list__item-icon">remove</i>
-			      Channel 6
+			      ch 6
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectChannel6" id="selectChannel6_checker">
@@ -1092,10 +1132,10 @@
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
+			  <li class="mdl-list__item list_item_no_padding">
 			    <span class="mdl-list__item-primary-content">
 			      <i id="valid7_icon" class="material-icons  mdl-list__item-icon">remove</i>
-			      Channel 7
+			      ch 7
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectChannel7" id="selectChannel7_checker">
@@ -1103,10 +1143,10 @@
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
+			  <li class="mdl-list__item list_item_no_padding">
 			    <span class="mdl-list__item-primary-content">
 			      <i id="valid8_icon" class="material-icons  mdl-list__item-icon">remove</i>
-			      Channel 8
+			      ch 8
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectChannel8" id="selectChannel8_checker">
@@ -1123,70 +1163,63 @@
 	  	<ul class="list-control-style mdl-list">
 			  <li class="mdl-list__item">
 			    <span class="mdl-list__item-primary-content">
-			      Frequencies
+			      freqs
 			    </span>
 			    <span class="mdl-list__item-secondary-action" style="margin-left: 20px;">
-			      <!--
-			      <div class="mdl-textfield mdl-js-textfield" style="margin-left: 30px;">
-				    <input class="mdl-textfield__input" type="text" id="frequencies" required="required" disabled>
-				    <span class="mdl-textfield__error">Input is not a number!</span>
-				  </div>
-				  -->
 				  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectFreq1" id="selectFreq1_checker">
 			        <input type="checkbox" id="selectFreq1" class="mdl-checkbox__input" disabled/>
-			        	&nbsp;2000
+			        	&nbsp;4000
 			      </label>
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectFreq2" id="selectFreq2_checker">
 			        <input type="checkbox" id="selectFreq2" class="mdl-checkbox__input" disabled/>
-			        	&nbsp;4000
+			        	&nbsp;8000
 			      </label>
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectFreq3" id="selectFreq3_checker">
 			        <input type="checkbox" id="selectFreq3" class="mdl-checkbox__input" disabled/>
-			        	&nbsp;8000
+			        	&nbsp;16000
 			      </label>
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectFreq4" id="selectFreq4_checker">
 			        <input type="checkbox" id="selectFreq4" class="mdl-checkbox__input" disabled/>
-			        	&nbsp;10000
-			      </label>
-			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="selectFreq5" id="selectFreq5_checker">
-			        <input type="checkbox" id="selectFreq5" class="mdl-checkbox__input" disabled/>
-			        	&nbsp;20000
+			        	&nbsp;32000
 			      </label>
 			    </span>
 			  </li>
 			  <li class="mdl-list__item">
-			    <span class="mdl-list__item-primary-content">
-			      Period(Minute)
+			    <span class="mdl-list__item-primary-content"  style="line-height : 1.2;">
+			      &nbsp;&nbsp;period (minutes)
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <div class="mdl-textfield mdl-js-textfield" style="margin-left: 30px;">
-				    <input class="mdl-textfield__input" type="text" required="required" pattern="-?[0-9]*(\.[0-9]+)?" id="period" disabled >
+				    <input class="mdl-textfield__input" type="text" required="required" pattern="-?[0-9]*(\.[0-9]+)?" id="period" style="border-bottom: 2px solid rgba(0,0,0,.48); padding-left: 16px;" disabled >
 				    <span class="mdl-textfield__error">Input is not a number!</span>
 				  </div>
 			    </span>
 			  </li>
 			  <li class="mdl-list__item">
-			    <span class="mdl-list__item-primary-content">
-			      Deadline(Days)
+			    <span class="mdl-list__item-primary-content" style="line-height : 1.2;">
+			      deadline  &nbsp;(days)
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <div class="mdl-textfield mdl-js-textfield" style="margin-left: 30px;">
-				    <input class="mdl-textfield__input" type="text" required="required" pattern="-?[0-9]*(\.[0-9]+)?" id="deadline" disabled >
+				    <input class="mdl-textfield__input" type="text" required="required" pattern="-?[0-9]*(\.[0-9]+)?" id="deadline" style="border-bottom: 2px solid rgba(0,0,0,.48); padding-left: 20px;" disabled >
 				    <span class="mdl-textfield__error">Input is a days!</span>
 				  </div>
 			    </span>
 			  </li>
 			  <li class="mdl-list__item">
 			    <span class="mdl-list__item-primary-content">
-			    	<button id="setup" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-left: 60px;" disabled>
+			    	<button id="setup" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-left: 40px;" disabled>
 					  &nbsp;&nbsp;Setup&nbsp;&nbsp;
 					</button>
 			    </span>
 			  </li>
 			</ul>
 	  </div>
+
+	  <div style="float: left; margin: 10px; margin-left:20px; border:2px solid #ebebeb; height:550px"></div>
+
 	  <div class="page-content" style="float: left; margin: 0px 5px 5px 10px;">
-	  	<h5 style="margin-left: 5px;">Device Control</h5>
+	  	<h5 class="h5_style" style="margin-left: 5px;">DEVICE CONTROL</h5>
 	  	<ul class="list-control-style mdl-list" style="width: 260px;">
 			  <li class="mdl-list__item">
 			    <span class="mdl-list__item-primary-content">
@@ -1225,10 +1258,12 @@
 			  </li>
 			</ul>
 	  </div>
+
+	  <div style="float: left; margin: 10px; margin-left:20px; border:2px solid #ebebeb; height:550px"></div>
     </section>
     <section class="mdl-layout__tab-panel" id="scroll-tab-2">
       <div class="page-content" style="float: left; margin: 0px 5px 5px 10px;">
-      	<h5>&nbsp;&nbsp;History</h5>
+      	<h5 class="h5_style_no_margin">&nbsp;&nbsp;HISTORY</h5>
 
 		<style>
 		.demo-list-control {
@@ -1237,12 +1272,6 @@
 
 		.demo-list-radio {
 		  display: inline;
-		}
-
-		.mdl-list__item2 {
-			font-size:12px;
-			min-height:10px;
-			height:20px;
 		}
 
 		.hr_no_padding {
@@ -1264,9 +1293,6 @@
 		    <span class="mdl-list__item-primary-content">
 		      <i class="material-icons  mdl-list__item-avatar" id="result_list_1_icon">done</i>
 		      <span id="result_list_1_title"></span>
-      		  <!-- 170220 YJ(mauver) removed for downsizing page
-      		  <span class="mdl-list__item-sub-title" id="result_list_1_subtitle"></span>
-      		  -->
 		    </span>
 		    <span class="mdl-list__item-secondary-action">
 		      <label class="demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect" for="result_list_1_radio" id="result_list_1_radio_icon">
@@ -1282,9 +1308,6 @@
 		    <span class="mdl-list__item-primary-content">
 		      <i class="material-icons  mdl-list__item-avatar" id="result_list_2_icon">done</i>
 		      <span id="result_list_2_title"></span>
-		      <!-- 170220 YJ(mauver) removed for downsizing page
-      		  <span class="mdl-list__item-sub-title" id="result_list_2_subtitle"></span>
-      		  -->
 		    </span>
 		    <span class="mdl-list__item-secondary-action">
 		      <label class="demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect" for="result_list_2_radio" id="result_list_2_radio_icon">
@@ -1300,9 +1323,6 @@
 		    <span class="mdl-list__item-primary-content">
 		      <i class="material-icons  mdl-list__item-avatar" id="result_list_3_icon">done</i>
 		      <span id="result_list_3_title"></span>
-		      <!-- 170220 YJ(mauver) removed for downsizing page
-      		  <span class="mdl-list__item-sub-title" id="result_list_3_subtitle"></span>
-      		  -->
 		    </span>
 		    <span class="mdl-list__item-secondary-action">
 		      <label class="demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect" for="result_list_3_radio" id="result_list_3_radio_icon">
@@ -1318,9 +1338,6 @@
 		    <span class="mdl-list__item-primary-content">
 		      <i class="material-icons  mdl-list__item-avatar" id="result_list_4_icon">done</i>
 		      <span id="result_list_4_title"></span>
-		      <!-- 170220 YJ(mauver) removed for downsizing page
-      		  <span class="mdl-list__item-sub-title" id="result_list_4_subtitle"></span>
-      		  -->
 		    </span>
 		    <span class="mdl-list__item-secondary-action">
 		      <label class="demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect" for="result_list_4_radio" id="result_list_4_radio_icon">
@@ -1332,13 +1349,11 @@
 		    <input id="result_list_4_channels" type="hidden" />
 		  </li>
 		  <hr class="hr_no_padding" id="result_list_4_separator" style="visibility: hidden;">
+		  <!-- 
 		  <li class="mdl-list__item mdl-list__item2" id="result_list_5" style="visibility: hidden;">
 		    <span class="mdl-list__item-primary-content">
 		      <i class="material-icons  mdl-list__item-avatar" id="result_list_5_icon">done</i>
 		      <span id="result_list_5_title"></span>
-		      <!-- 170220 YJ(mauver) removed for downsizing page
-      		  <span class="mdl-list__item-sub-title" id="result_list_5_subtitle"></span>
-      		  -->
 		    </span>
 		    <span class="mdl-list__item-secondary-action">
 		      <label class="demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect" for="result_list_5_radio" id="result_list_5_radio_icon">
@@ -1354,9 +1369,6 @@
 		    <span class="mdl-list__item-primary-content">
 		      <i class="material-icons  mdl-list__item-avatar" id="result_list_6_icon">done</i>
 		      <span id="result_list_6_title"></span>
-		      <!-- 170220 YJ(mauver) removed for downsizing page
-      		  <span class="mdl-list__item-sub-title" id="result_list_6_subtitle"></span>
-      		  -->
 		    </span>
 		    <span class="mdl-list__item-secondary-action">
 		      <label class="demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect" for="result_list_6_radio" id="result_list_6_radio_icon">
@@ -1368,13 +1380,20 @@
 		    <input id="result_list_6_channels" type="hidden" />
 		  </li>
 		  <hr class="hr_no_padding" id="result_list_6_separator" style="visibility: hidden;">
+		  -->
 		  <input id="result_list_selected_index" type="hidden" />
 		</ul>
       </div>
 
+      <div style="float: left; margin: 10px; margin-left:20px; border:2px solid #ebebeb; height:250px"></div>
+
       <style>
 		    .filter-list-control-style {
-		    width: 180px;
+		    width: 120px;
+		  }
+
+		  .filter-list-control-style2 {
+		    width: 90px;
 		  }
 
 		  .material-icons.redled { color: #FF0000; }
@@ -1388,66 +1407,66 @@
 	  </style>
 
       <div class="page-content" style="float: left; margin: 0px 5px 5px 10px;">
-      		<h5 style="margin-left: 10px;">Channel filter</h5>
+      		<h5 class="h5_style_no_margin" style="margin-left: 10px;">CHANNEL FILTER</h5>
 			<ul class="filter-list-control-style mdl-list ul_no_padding" style="float: left; margin: 0px 5px 5px 10px;">
-			  <li class="mdl-list__item list_item_no_padding">
-			    <span class="mdl-list__item-primary-content">Channel 1</span>
+			  <li class="mdl-list__item list_item_no_padding2">
+			    <span class="mdl-list__item-primary-content">ch 1</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="filterChannel1" id="filterChannel1_checker">
 			        <input type="checkbox" id="filterChannel1" class="mdl-checkbox__input" />
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item list_item_no_padding">
-			    <span class="mdl-list__item-primary-content">Channel 2</span>
+			  <li class="mdl-list__item list_item_no_padding2">
+			    <span class="mdl-list__item-primary-content">ch 2</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="filterChannel2" id="filterChannel2_checker">
 			        <input type="checkbox" id="filterChannel2" class="mdl-checkbox__input" />
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item list_item_no_padding">
-			    <span class="mdl-list__item-primary-content">Channel 3</span>
+			  <li class="mdl-list__item list_item_no_padding2">
+			    <span class="mdl-list__item-primary-content">ch 3</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="filterChannel3" id="filterChannel3_checker">
 			        <input type="checkbox" id="filterChannel3" class="mdl-checkbox__input" />
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item list_item_no_padding">
-			    <span class="mdl-list__item-primary-content">Channel 4</span>
+			  <li class="mdl-list__item list_item_no_padding2">
+			    <span class="mdl-list__item-primary-content">ch 4</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="filterChannel4" id="filterChannel4_checker">
 			        <input type="checkbox" id="filterChannel4" class="mdl-checkbox__input" />
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item list_item_no_padding">
-			    <span class="mdl-list__item-primary-content">Channel 5</span>
+			  <li class="mdl-list__item list_item_no_padding2">
+			    <span class="mdl-list__item-primary-content">ch 5</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="filterChannel5" id="filterChannel5_checker">
 			        <input type="checkbox" id="filterChannel5" class="mdl-checkbox__input" />
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item list_item_no_padding">
-			    <span class="mdl-list__item-primary-content">Channel 6</span>
+			  <li class="mdl-list__item list_item_no_padding2">
+			    <span class="mdl-list__item-primary-content">ch 6</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="filterChannel6" id="filterChannel6_checker">
 			        <input type="checkbox" id="filterChannel6" class="mdl-checkbox__input" />
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item list_item_no_padding">
-			    <span class="mdl-list__item-primary-content">Channel 7</span>
+			  <li class="mdl-list__item list_item_no_padding2">
+			    <span class="mdl-list__item-primary-content">ch 7</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="filterChannel7" id="filterChannel7_checker">
 			        <input type="checkbox" id="filterChannel7" class="mdl-checkbox__input" />
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item list_item_no_padding">
-			    <span class="mdl-list__item-primary-content">Channel 8</span>
+			  <li class="mdl-list__item list_item_no_padding2">
+			    <span class="mdl-list__item-primary-content">ch 8</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="filterChannel8" id="filterChannel8_checker">
 			        <input type="checkbox" id="filterChannel8" class="mdl-checkbox__input" />
@@ -1457,41 +1476,42 @@
 			</ul>
       </div>
       <div class="page-content" style="float: left; margin: 0px 5px 5px 10px;">
-      		<h5 style="margin-left: 10px;">Freq filter</h5>
+      		<h5 class="h5_style_no_margin" style="margin-left: 10px;">FREQ FILTER</h5>
       		<ul class="filter-list-control-style mdl-list ul_no_padding" style="float: left; margin: 0px 5px 5px 10px;">
-			  <li class="mdl-list__item">
-			    <span class="mdl-list__item-primary-content">2000</span>
+			  <li class="mdl-list__item list_item_no_padding">
+			    <span class="mdl-list__item-primary-content">4000</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="filterFreq1" id="filterFreq1_checker">
 			        <input type="radio" id="filterFreq1" class="mdl-radio__button" name="filterFreqOptions"/>
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
-			    <span class="mdl-list__item-primary-content">4000</span>
+			  <li class="mdl-list__item list_item_no_padding">
+			    <span class="mdl-list__item-primary-content">8000</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="filterFreq2" id="filterFreq2_checker">
 			        <input type="radio" id="filterFreq2" class="mdl-radio__button" name="filterFreqOptions"/>
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
-			    <span class="mdl-list__item-primary-content">8000</span>
+			  <li class="mdl-list__item list_item_no_padding">
+			    <span class="mdl-list__item-primary-content">16000</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="filterFreq3" id="filterFreq3_checker">
 			        <input type="radio" id="filterFreq3" class="mdl-radio__button" name="filterFreqOptions"/>
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
-			    <span class="mdl-list__item-primary-content">10000</span>
+			  <li class="mdl-list__item list_item_no_padding">
+			    <span class="mdl-list__item-primary-content">32000</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="filterFreq4" id="filterFreq4_checker">
 			        <input type="radio" id="filterFreq4" class="mdl-radio__button" name="filterFreqOptions"/>
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
+			  <!--
+			  <li class="mdl-list__item list_item_no_padding">
 			    <span class="mdl-list__item-primary-content">20000</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="filterFreq5" id="filterFreq5_checker">
@@ -1499,12 +1519,13 @@
 			      </label>
 			    </span>
 			  </li>
+			  -->
 			</ul>
       </div>
       <div class="page-content" style="float: left; margin: 0px 5px 5px 10px;">
-      		<h5 style="margin-left: 10px;">Data selection</h5>
-      		<ul class="filter-list-control-style mdl-list ul_no_padding" style="float: left; margin: 0px 5px 5px 10px;">
-			  <li class="mdl-list__item">
+      		<h5 class="h5_style_no_margin" style="margin-left: 10px;">DATA SELECTION</h5>
+      		<ul class="filter-list-control-style2 mdl-list ul_no_padding" style="float: left; margin: 0px 5px 5px 10px;">
+			  <li class="mdl-list__item list_item_no_padding">
 			    <span class="mdl-list__item-primary-content">Z</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="filterZ" id="filterZ_checker">
@@ -1512,7 +1533,7 @@
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
+			  <li class="mdl-list__item list_item_no_padding">
 			    <span class="mdl-list__item-primary-content">R</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="filterR" id="filterR_checker">
@@ -1520,7 +1541,7 @@
 			      </label>
 			    </span>
 			  </li>
-			  <li class="mdl-list__item">
+			  <li class="mdl-list__item list_item_no_padding">
 			    <span class="mdl-list__item-primary-content">C</span>
 			    <span class="mdl-list__item-secondary-action">
 			      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="filterC" id="filterC_checker">
@@ -1531,7 +1552,7 @@
 			</ul>
       </div>
       <div class="page-content" style="float: bottom;">
-      		<iframe id="graph_view" width="100%" height="440px" src=""></iframe>
+      		<iframe id="graph_view" width="100%" height="550px" src=""></iframe>
       </div>
     </section>
   </main>
