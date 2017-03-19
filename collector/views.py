@@ -24,41 +24,34 @@ import matplotlib.pyplot as plt
 # Not handle the device's state, only bypass the commands.
 
 # for setting the config
-def openConfigFile():
-	config = RawConfigParser()
-	config.read('./collector/parameter.ini')
-
-	return config
-
 def initConfig():
-	config = openConfigFile()
+	setConfig(STATE.PARAM_STATE, STATE.STATE_INITIALIZNG)
+	setConfig(STATE.PARAM_COMMAND, '')
+	setConfig(STATE.PARAM_CHIPINFO, '')
+	setConfig(STATE.PARAM_CHANNEL, '')
+	setConfig(STATE.PARAM_FREQ, '')
+	setConfig(STATE.PARAM_DEADLINE, '')
+	setConfig(STATE.PARAM_PERIOD, '')
+	setConfig(STATE.PARAM_RESULT, '')
+	setConfig(STATE.PARAM_ERROR, '')
+	setConfig(STATE.PARAM_RECORD_STATE, '')
+	setConfig(STATE.PARAM_COUNTER, '')
+	setConfig(STATE.PARAM_START_TIME, '')
 
-	config.set('parameter', STATE.PARAM_STATE, STATE.STATE_INITIALIZNG)
-	config.set('parameter', STATE.PARAM_COMMAND, '')
-	config.set('parameter', STATE.PARAM_CHIPINFO, '')
-	config.set('parameter', STATE.PARAM_CHANNEL, '')
-	config.set('parameter', STATE.PARAM_FREQ, '')
-	config.set('parameter', STATE.PARAM_DEADLINE, '')
-	config.set('parameter', STATE.PARAM_PERIOD, '')
-	config.set('parameter', STATE.PARAM_RESULT, '')
-	config.set('parameter', STATE.PARAM_ERROR, '')
-	config.set('parameter', STATE.PARAM_RECORD_STATE, '')
-	config.set('parameter', STATE.PARAM_COUNTER, '')
-	config.set('parameter', STATE.PARAM_START_TIME, '')
-
-	with open(r'./collector/parameter.ini', 'wb') as configFile:
-		config.write(configFile)
-
+# if some_queryset.filter(pk=entry.pk).exists():
 def setConfig(key, value):
-	config = openConfigFile()
-	config.set('parameter', key, value)
-
-	with open(r'./collector/parameter.ini', 'wb') as configFile:
-		config.write(configFile)
+	queryResult = Parameter.objects.filter(key=key)
+	if queryResult.exists():
+		queryResult.update(value=value)
+	else:
+		Parameter(key=key, value=value).save()
 
 def getConfig(key):
-	config = openConfigFile()
-	return config.get('parameter', key)
+	queryResult = Parameter.objects.filter(key=key)
+	if queryResult.exists():
+		return queryResult.get(key=key).value 
+	else:
+		return ''
 
 # Do not check csrf cookies for POST messages
 # This function only uses collecting the data.
@@ -139,6 +132,7 @@ def init(request):
 	if(request.method == 'POST'):
 		# initConfig function always succeed.
 		initConfig()
+
 		return HttpResponse('{"result":true}')
 	else:
 		return HttpResponse('{"result":false}')
