@@ -502,7 +502,7 @@
 
 				for(var i=1; i<=4; i++){
 					$('#result_list_' + (i+1) + '_radio').val("0");
-					$('#result_list_1_radio_icon').attr("class", "demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded");
+					$('#result_list_' + (i+1) + '_radio_icon').attr("class", "demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded");
 					$('#result_list_' + i + '_icon').text("done");
 					$('#result_list_' + i + '_icon').attr("class", "material-icons  mdl-list__item-icon redled");
 				}
@@ -579,8 +579,6 @@
           				var data = result.value;
           				setCheckBoxState(data);
 
-          				$('#checkChip').prop("disabled", false);
-	          			$('#checkChip').text("Check Chip");
 	          			$('#setup').prop("disabled", false);
 	          			$('#period').prop("disabled", false);
 	          			$('#deadline').prop("disabled", false);
@@ -590,13 +588,13 @@
 	          			}
           			}
           			else{
-          				$('#checkChip').text("CHECK CHIP");
-	          			$('#checkChip').prop("disabled", false);
 	          			alert("Check chip failed : " + result.error);
           			}
           		},
           		complete: function(){
           			commandOperating = false;
+          			$('#checkChip').text("Check Chip");
+          			$('#checkChip').prop("disabled", false);
           		}
         	});
         });
