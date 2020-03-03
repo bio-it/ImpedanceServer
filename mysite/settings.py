@@ -25,7 +25,7 @@ SECRET_KEY = '(gzt7%606@6nj=68tghk*##jj*%mul^udh=no4&9m#-6vcpez#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1", "210.115.227.99"]
 
 # Character set
 DEFAULT_CHARSET = 'utf-8'

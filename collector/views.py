@@ -4,7 +4,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from ConfigParser import RawConfigParser
+from configparser import RawConfigParser
 from . import protocol as STATE
 from collector.models import *
 from django.db.models import Max
@@ -49,7 +49,7 @@ def setConfig(key, value):
 def getConfig(key):
 	queryResult = Parameter.objects.filter(key=key)
 	if queryResult.exists():
-		return queryResult.get(key=key).value 
+		return queryResult.get(key=key).value
 	else:
 		return ''
 
@@ -72,7 +72,7 @@ def collector(request):
 			period = jsonData['period']
 			freqs = jsonData['freqs']
 			channels = jsonData['channels']
-			dbData = DwfResultData(dataCounter=dataCounter, startTime = startTime, 
+			dbData = DwfResultData(dataCounter=dataCounter, startTime = startTime,
 				targetTime=targetTime, period=period, freqs=freqs, channels=channels)
 			dbData.save()
 			result['result'] = True
@@ -99,7 +99,7 @@ def collector(request):
 		#	data.save()
 
 		# currently alway return to true
-		
+
 
 	return HttpResponse(json.dumps(result), content_type='application/json')
 
@@ -163,7 +163,7 @@ def command(request):
 				time.sleep(0.2)
 
 				res = getConfig(STATE.PARAM_RESULT)
-				
+
 				if(res == 'OK'):
 					chipInfo = getConfig(STATE.PARAM_CHIPINFO)
 
@@ -297,7 +297,7 @@ def command(request):
 			result["freq"] = freq
 			result["deadline"] = getConfig(STATE.PARAM_DEADLINE)
 			result["period"] = getConfig(STATE.PARAM_PERIOD)
-			result["recordState"] = getConfig(STATE.PARAM_RECORD_STATE)			
+			result["recordState"] = getConfig(STATE.PARAM_RECORD_STATE)
 			result["startTime"] = getConfig(STATE.PARAM_START_TIME)
 			if(result["startTime"] != ""):
 				endTime = datetime.datetime.strptime(result["startTime"], timeFormat) + datetime.timedelta(days=int(result["deadline"]))
@@ -336,7 +336,7 @@ def graph(request):
 	freqs = request.GET.get('freqs', '')
 	dataSelection = request.GET.get('dataSelection', '')
 
-	print "dataCounter %s, channels %s, freqs %s" % (dataCounter, channels, freqs)
+	print("dataCounter %s, channels %s, freqs %s" % (dataCounter, channels, freqs))
 
 	if dataCounter != '' and channels != '' and freqs != '' and dataSelection != '':
 		channels = ast.literal_eval("[" + channels + "]")
@@ -354,16 +354,16 @@ def graph(request):
 			series_options_term = "channel%d_%s" %(channel+1, dataSelection)
 			series.append({"options" :{
 							"source" : queryData},
-							"terms" : [{"channel%d_time" % (channel+1) : "timeMin"}, 
+							"terms" : [{"channel%d_time" % (channel+1) : "timeMin"},
 										series_term]})
 
-			series_options_terms["channel%d_time" % (channel+1)] = [series_options_term] 
+			series_options_terms["channel%d_time" % (channel+1)] = [series_options_term]
 		chartData = DataPool(series=series)
 		chart = Chart(
 			datasource=chartData,
 			series_options=
 				[{"options" : {
-					"type" : "line", 
+					"type" : "line",
 					"stacking" : False},
 				  "terms" : series_options_terms}],
 			chart_options= {'title': {
@@ -375,7 +375,7 @@ def graph(request):
 	                'title': {
                    		'text': 'Impedence'}}})
 
-		return render(request, 'graph.html', {'graphData':chart})	
+		return render(request, 'graph.html', {'graphData':chart})
 	return HttpResponse('')
 
 def error(request):
