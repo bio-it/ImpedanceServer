@@ -358,6 +358,7 @@ def graph(request):
 										series_term]})
 
 			series_options_terms["channel%d_time" % (channel+1)] = [series_options_term]
+		""" need to another chart library
 		chartData = DataPool(series=series)
 		chart = Chart(
 			datasource=chartData,
@@ -374,8 +375,8 @@ def graph(request):
                 'yAxis': {
 	                'title': {
                    		'text': 'Impedence'}}})
-
-		return render(request, 'graph.html', {'graphData':chart})
+		"""
+		return render(request, 'graph.html')
 	return HttpResponse('')
 
 def error(request):

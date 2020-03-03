@@ -9,12 +9,12 @@
 		  return check;
 	}
 
-	if(isMobile()){mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g 
-		window.location.href = '/error'; 
+	if(isMobile()){mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g
+		window.location.href = '/error';
 	}
 </script>
 
-{% load staticfiles %}
+{% load static %}
 
 <link rel="stylesheet" href="{% static "material_custom.css" %}" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -108,7 +108,7 @@
 		}
 	}
 
-	
+
 	function clearTable(){
 		for(var i=0; i<8; i++){
 			var rId = "#R" + (i+1);
@@ -144,7 +144,7 @@
 
 	function checkState(){
 		var request = $.ajax({
-			url: "/command/", 
+			url: "/command/",
 			type: "POST",
 			data: "{\"command\":\"CheckState\"}",
 			dataType: "json",
@@ -232,7 +232,7 @@
 	      							var channelIndex = parseInt(channels[i].trim());
 	      							var checkId = "#selectChannel" + (channelIndex+1);
 	      							var checkCheckerId = "#selectChannel" + (channelIndex+1) + "_checker";
-	      							
+
 	      							$(checkId).prop("checked", true);
 	      							$(checkCheckerId).attr("class", "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded is-checked");
 	      						}
@@ -247,7 +247,7 @@
 	      							$('#recordingChecker').attr("class", "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded");
 	      						}
 	      					}
-	      					else if(state == "running"){	
+	      					else if(state == "running"){
 	      						// This running is only once
 	      						$('#checkChip').prop("disabled", true);
 								$('#setup').prop("disabled", true);
@@ -391,11 +391,11 @@
 
 			if(i == 0){
 
-				$('#filterChannel' + channel + "_checker").attr("class", "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded is-checked");	
+				$('#filterChannel' + channel + "_checker").attr("class", "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded is-checked");
 				$('#filterChannel' + channel).prop("checked", true);
 			}
 			else{
-				$('#filterChannel' + channel + "_checker").attr("class", "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded");	
+				$('#filterChannel' + channel + "_checker").attr("class", "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded");
 			}
 		}
 
@@ -524,7 +524,7 @@
 					}
 					else{
 						$('#result_list_' + (i+1)).attr("style", "visibility: hidden;");
-						$('#result_list_' + (i+1) + '_separator').attr("style", "visibility: hidden;");	
+						$('#result_list_' + (i+1) + '_separator').attr("style", "visibility: hidden;");
 						$('#result_list_' + (i+1) + '_counter').val("");
 						$('#result_list_' + (i+1) + '_freqs').val("");
 						$('#result_list_' + (i+1) + '_channels').val("");
@@ -533,7 +533,7 @@
 
 				$('#result_list_1_radio').val("1");
 				$('#result_list_1_radio_icon').attr("class", "demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded is-checked");
-				
+
 				loadResult(1);
 			},
 			complete: function(){
@@ -623,8 +623,8 @@
 				frequencies = frequencies.slice(0, -1);
 			}
 
-			if(!validatePattern($('#period')) || 
-			   !validatePattern($('#deadline')) || 
+			if(!validatePattern($('#period')) ||
+			   !validatePattern($('#deadline')) ||
 				frequencies == ''){
 				showValidationErrorDialog();
 				return;
@@ -652,8 +652,8 @@
 			var request = $.ajax({
           		url: "/command/",
           		type: "POST",
-          		data: "{\"command\":\"Setup\", \"freqs\":[ " + 
-          				frequencies +  " ], \"period\":\"" + period + 
+          		data: "{\"command\":\"Setup\", \"freqs\":[ " +
+          				frequencies +  " ], \"period\":\"" + period +
           				"\", \"deadline\":\"" + deadline + "\", \"channels\":[ " +
           				checkBoxes + " ] }",
           		dataType: "json",
@@ -880,7 +880,7 @@
         for(let i=1; i<=6; i++){
         	$('#result_list_' + i + '_radio').click(function(){
 				loadResult(i);
-			});	
+			});
         }
 
         for(let i=1; i<=8; i++){
@@ -891,7 +891,7 @@
 			if(i <= predefinedFreqs.length){
 				$('#filterFreq' + i).click(function(){
 					loadGraph();
-				});				
+				});
 			}
         }
 
@@ -906,7 +906,7 @@
         $('#filterC').click(function(){
         	loadGraph();
         });
-		
+
  	});
 </script>
 </head>
@@ -1220,7 +1220,7 @@
 	  	<ul class="list-control-style mdl-list" style="width: 260px;">
 			  <li class="mdl-list__item">
 			    <span class="mdl-list__item-primary-content">
-			      State : 
+			      State :
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <i id="state" style="font-size:14px;"></i>
@@ -1228,20 +1228,20 @@
 			  </li>
 			  <li class="mdl-list__item">
 			    <span class="mdl-list__item-primary-content">
-			      End Date : 
+			      End Date :
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <i id="running_time" style="font-size:12px;"></i>
-			      	
+
 			    </span>
 			  </li>
 			  <li class="mdl-list__item">
 			    <span class="mdl-list__item-primary-content">
-			      Elapsed Time : 
+			      Elapsed Time :
 			    </span>
 			    <span class="mdl-list__item-secondary-action">
 			      <i id="elapsed_time" style="font-size:14px;"></i>
-			      	
+
 			    </span>
 			  </li>
 			  <li class="mdl-list__item">
@@ -1346,7 +1346,7 @@
 		    <input id="result_list_4_channels" type="hidden" />
 		  </li>
 		  <hr class="hr_no_padding" id="result_list_4_separator" style="visibility: hidden;">
-		  <!-- 
+		  <!--
 		  <li class="mdl-list__item mdl-list__item2" id="result_list_5" style="visibility: hidden;">
 		    <span class="mdl-list__item-primary-content">
 		      <i class="material-icons  mdl-list__item-avatar" id="result_list_5_icon">done</i>
